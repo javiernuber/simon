@@ -1,6 +1,6 @@
-# SIMOM
+# SIMON
 
-Example of game SIMOM for testing javascript
+Example of game SIMON for testing javascript
 
 ## Credits
 
