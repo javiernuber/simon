@@ -3,12 +3,19 @@ let keys = generateKeys(levels)
 
 function nextLevel(currentLevel) {
   if (currentLevel == levels) {
-    alert ("Winer!!")
+    swal({
+      title: 'Winer!!',
+      type: 'success'
+    })
   }
-  alert(`Level: ${currentLevel + 1}`)
+  swal({
+    title: `Level: ${currentLevel + 1}`,
+    timer: 1500,
+    showConfirmButton: false
+  })
   for (let i = 0; i <= currentLevel; i++) {
     setTimeout(() => activate(keys[i]),
-      1000 * (i+1))
+      1000 * (i+1) + 1000)
   }
 
   let i = 0
@@ -25,8 +32,20 @@ function nextLevel(currentLevel) {
       currentKey = keys[i]
     } else {
       activate(currentKey, { fail: true })
-      window.removeEventListener('keydown', onkeydown)
-      setTimeout(() => alert('You lost :('), 1000)
+      window  .removeEventListener('keydown', onkeydown)
+      setTimeout(() => swal({
+        title: 'You lost :(',
+        text: 'Do you want to play again?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelBittonText: 'No',
+        closeOnConfirm: true
+      }, function (ok) {
+        if (ok) {
+          keys = generateKeys(levels)
+          nextLevel(0)
+        }
+      }), 1000)
     }
   }
 }
